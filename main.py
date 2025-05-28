@@ -110,20 +110,22 @@ jane_record.add_phone("9876543210")
 book.add_record(jane_record)
 
 # Виведення всіх записів у книзі
-     print(book)
+print(book)
 
 # Знаходження та редагування телефону для John
 john = book.find("John")
+print(type(john))
+print(f"{john}<<<<<<<<<")
 john.edit_phone("1234567890", "1112223333")
 
-print(john)  # Виведення: Contact name: John, phones: 1112223333; 5555555555
+# print(john)  # Виведення: Contact name: John, phones: 1112223333; 5555555555
 
-# Пошук конкретного телефону у записі John
-found_phone = john.find_phone("5555555555")
-print(f"{john.name}: {found_phone}")  # Виведення: John: 5555555555
+# # Пошук конкретного телефону у записі John
+# found_phone = john.find_phone("5555555555")
+# print(f"{john.name}: {found_phone}")  # Виведення: John: 5555555555
 
-# Видалення запису Jane
-book.delete("Jane")
+# # Видалення запису Jane
+# book.delete("Jane")
 
 # book = AddressBook()
 # bob = Record("Bob")
