@@ -72,31 +72,36 @@ class Record:
 #Клас для зберігання та управління записами.
 class AddressBook(UserDict):
     '''
-    1) Має наслідуватись від класу UserDict.
-    2) Реалізовано метод add_record, який додає запис до self.data. 
+    Done 1) Має наслідуватись від класу UserDict.
+    Done 2) Реалізовано метод add_record, який додає запис до self.data. 
     Записи Record у AddressBook зберігаються як значення у словнику. 
-    В якості ключів використовується значення Record.name.value.
+    Done 3) В якості ключів використовується значення Record.name.value.
     4) Реалізовано метод find, який знаходить запис за ім'ям. 
     На вхід отримує один аргумент - рядок, якій містить ім’я. Повертає об’єкт Record, або None, якщо запис не знайден.
-    Реалізовано метод delete, який видаляє запис за ім'ям.
-    Реалізовано магічний метод __str__ для красивого виводу об’єкту класу AddressBook .
+    5) Реалізовано метод delete, який видаляє запис за ім'ям.
+    Done 6)Реалізовано магічний метод __str__ для красивого виводу об’єкту класу AddressBook .
     '''
     def add_record(self, value):
-        key = Record.value.name.value
-        print(f"Key in add_record {key}")
-        value = Record(value)
-        print(f"value in add_record {value}")
+        key = value.name.value
+        value = value
         self.data[key] = value
+
+    def find(self, value):
+        self.data.pop(value, f"Adress book {value} not found")
     
     def __str__(self):
-        return "!!!!".join(f"{k}<> {v}" for k, v in self.data.items())
+        return "\n".join({f"Address book: {k}" : v for k, v in self.data.items()})
 
 book = AddressBook()
 bob = Record("Bob")
+piter = Record("Piter")
 # print(f"Створено об'єкт {bob}")
+piter.add_phone('1111111111')
 bob.add_phone("1234567890")
 # print (f"виконано bob.add_phone('1234567890')\n{bob}")
 bob.add_phone("0004567890")
+piter.add_phone('2222222222')
+piter.add_phone('3333333333')
 # print (f"виконано bob.add_phone('0004567890')\n{bob}")
 # bob.add_phone("0004567890")
 # print (f"виконано bob.add_phone('0004567890')\n{bob}")
@@ -116,5 +121,6 @@ bob.add_phone("0004567890")
 # print (f"виконано print(bob.find_phone('5555555555'))\n{bob}")
 # print(bob.name.value)
 book.add_record(bob)
+book.add_record(piter)
 print(book)
-print(bob.name.value)
+# print(bob.name.value)
