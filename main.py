@@ -114,56 +114,14 @@ print(book)
 
 # Знаходження та редагування телефону для John
 john = book.find("John")
-print(type(john))
-print(f"{john}<<<<<<<<<")
+print(f"{john}")
 john.edit_phone("1234567890", "1112223333")
 
-# print(john)  # Виведення: Contact name: John, phones: 1112223333; 5555555555
+print(john)  # Виведення: Contact name: John, phones: 1112223333; 5555555555
 
-# # Пошук конкретного телефону у записі John
-# found_phone = john.find_phone("5555555555")
-# print(f"{john.name}: {found_phone}")  # Виведення: John: 5555555555
+# Пошук конкретного телефону у записі John
+found_phone = john.find_phone("5555555555")
+print(f"{john.name}: {found_phone}")  # Виведення: John: 5555555555
 
-# # Видалення запису Jane
-# book.delete("Jane")
-
-# book = AddressBook()
-# bob = Record("Bob")
-# piter = Record("Piter")
-# alex = Record("Alex")
-# # print(f"Створено об'єкт {bob}")
-# piter.add_phone('1111111111')
-# bob.add_phone("1234567890")
-# # print (f"виконано bob.add_phone('1234567890')\n{bob}")
-# bob.add_phone("0004567890")
-# piter.add_phone('2222222222')
-# piter.add_phone('3333333333')
-# alex.add_phone('0912837465')
-# # print (f"виконано bob.add_phone('0004567890')\n{bob}")
-# # bob.add_phone("0004567890")
-# # print (f"виконано bob.add_phone('0004567890')\n{bob}")
-# # print (f"Перевірка remove_phone")
-# # bob.remove_phone('1234567890')
-# # print (f"виконано bob.remove_phone('1234567890')\n{bob}")
-# # bob.remove_phone('1234567890')
-# # print (f"виконано bob.remove_phone('1234567890')\n{bob}")
-# # print('Перевірка edit')
-# # bob.edit_phone('1234567890','0004567890')
-# # print (f"виконано bob.edit_phone('1234567890','0004567890')\n{bob}")
-# # bob.edit_phone('0004567890','1234567000')
-# # print (f"виконано bob.edit_phone('0004567890','1234567000')\n{bob}")
-# # print(bob.find_phone('1234567000'))
-# # print (f"виконано print(bob.find_phone('1234567000'))\n{bob}")
-# # print(bob.find_phone('5555555555'))
-# # print (f"виконано print(bob.find_phone('5555555555'))\n{bob}")
-# # print(bob.name.value)
-# book.add_record(bob)
-# book.add_record(piter)
-# book.add_record(alex)
-# # print(book)
-# # print(book.find('Bob'))
-# print(book)
-# book.delete('Alex')
-# book.delete('Alex')
-# print(book)
-# # print(bob.name.value)
+# Видалення запису Jane
+book.delete("Jane")
