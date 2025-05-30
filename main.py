@@ -1,5 +1,11 @@
 from collections import UserDict
 
+#клас для кастомних помилок
+class CastomError(Exception):
+    def __init__(self, message="Custom Error"):
+        self.message = message
+        super().__init__(self.message)
+
 # Базовий клас для полів запису.
 class Field:
     def __init__(self, value):
@@ -27,6 +33,9 @@ class Phone(Field):
     def __eq__(self, other):
         eq = (self.value == other.value)
         return eq
+    
+    def __repr__(self): #оскільки помилки усував коли вже познайомився з repr додав його щоб не танцювати з бубном при виводі об'єкта
+        return f"{self}"
 
 # Клас для зберігання інформації про контакт, включаючи ім'я та список телефонів.
 class Record:
@@ -47,24 +56,45 @@ class Record:
         if Phone(phone) not in self.phones:
             self.phones.append(Phone(phone))
         else:
-            print(f'{phone} is already present in the notebook for {self.name}')
+            raise CastomError (f'{phone} is already present in the notebook for {self.name}')
+            #print(f'{phone} is already present in the notebook for {self.name}')
 
     def remove_phone(self, phone):
         if Phone(phone) in self.phones:
             self.phones.remove(Phone(phone))
         else:
-            print('Номер не знайдено')
+            raise CastomError (f'{phone} відсутній в {self.name}')
 
     def edit_phone(self, old_phone, new_phone):
-        try:
-            self.phones.remove(Phone(old_phone))
-            self.add_phone(new_phone)
-        except ValueError:
-            print(f'{ValueError}\nНомер {old_phone} який необхідно змінити не знайдено')
+        """
+        Правки
+        Спочатку перевіряється новий номер і вставляється, далі відповідно шукається старий номер для видалення
+        Може щось трохи перемудрував але як зробити простіше і щоб все не зломалось не придумав"""
+        for action, error, msg in [(lambda: self.add_phone(new_phone), CastomError, f"{new_phone} is already present in the notebook for {self.name}"),
+                                    (lambda: self.phones.remove(Phone(old_phone)), ValueError, f"Номер {old_phone} який необхідно змінити не знайдено")]:
+            try:
+                action()
+            except error:
+                raise error (f"\n{msg}")
+        # try:   
+        #     self.add_phone(new_phone)
+        # except CastomError:
+        #      print(f'{CastomError}\n {new_phone} is already present in the notebook for {self.name}')
+        # try:
+        #     self.phones.remove(Phone(old_phone))
+        # except ValueError:
+        #     print(f'{ValueError}\nНомер {old_phone} який необхідно змінити не знайдено')
 
     def find_phone(self, phone_for_search):
-        if Phone(phone_for_search) in self.phones:
-            return Phone(phone_for_search)
+        # if Phone(phone_for_search) in self.phones:
+        #     return Phone(phone_for_search)
+        """
+        ПРАВКИ
+        тепер повертає об'єкт Phone
+        оскільки помилки усував коли вже познайомився з __repr__ додав його в class Phone щоб не танцювати з бубном при виводі об'єкта
+        """
+        result=next((ithem for ithem in self.phones if ithem == Phone(phone_for_search)), None) #
+        return result
 
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
@@ -115,7 +145,7 @@ print(book)
 # Знаходження та редагування телефону для John
 john = book.find("John")
 print(f"{john}")
-john.edit_phone("1234567890", "1112223333")
+john.edit_phone("1234567890", "1111111111")
 
 print(john)  # Виведення: Contact name: John, phones: 1112223333; 5555555555
 
